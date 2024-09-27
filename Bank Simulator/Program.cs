@@ -1,6 +1,7 @@
 ﻿using Bank_Simulator;
 using System.Xml.Serialization;
 
+Console.OutputEncoding = System.Text.Encoding.UTF8;
 string name;
 int bonus = 1000;
 int balance = 0;
