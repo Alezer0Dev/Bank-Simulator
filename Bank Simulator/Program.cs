@@ -68,7 +68,12 @@ do
             break;
 
         case 4:
-            currentAccount.PrintHistory();
+            var history = currentAccount.GetHistory();
+            Console.WriteLine("\nCronologia:");
+            for (int i = 0; i < history.Count; i++)
+            {
+                Console.WriteLine(history[i]);
+            }
             break;
 
         case 5:

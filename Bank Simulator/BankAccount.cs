@@ -8,19 +8,19 @@ namespace Bank_Simulator
 {
     public class BankAccount
     {
-        private string name;
-        private int balance;
-        private string iban;
-        private List<string> history = new List<string>();
-        static List<BankAccount> accounts = new List<BankAccount>();
+        private string _name;
+        private int _balance;
+        private string _iban;
+        private List<string> _history = new List<string>();
+        static List<BankAccount> _accounts = new List<BankAccount>();
 
         public BankAccount(string name, int balance, string iban)
         {
             Console.WriteLine("Creazione account..");
-            this.name = name;
-            this.balance = balance;
-            this.iban = iban;
-            accounts.Add(this);
+            this._name = name;
+            this._balance = balance;
+            this._iban = iban;
+            _accounts.Add(this);
             Console.WriteLine("Account creato");
         }
 
@@ -33,12 +33,12 @@ namespace Bank_Simulator
 
         static BankAccount FindAccountByName(string name)
         {
-            if (accounts.Count == 0) throw new Exception("Non esiste nessun account");
-            for (int i = 0; i < accounts.Count; i++)
+            if (_accounts.Count == 0) throw new Exception("Non esiste nessun account");
+            for (int i = 0; i < _accounts.Count; i++)
             {
-                if (name == accounts[i].name)
+                if (name == _accounts[i]._name)
                 {
-                    return accounts[i];
+                    return _accounts[i];
                 }
             }
             throw new Exception("Nessun account esistente con questo nome");
@@ -46,10 +46,10 @@ namespace Bank_Simulator
 
         public static bool IsIbanUsed(string iban)
         {
-            if (accounts.Count == 0) return false;
-            for (int i = 0; i < accounts.Count; i++)
+            if (_accounts.Count == 0) return false;
+            for (int i = 0; i < _accounts.Count; i++)
             {
-                if (iban == accounts[i].iban)
+                if (iban == _accounts[i]._iban)
                 {
                     return true;
                 }
@@ -59,10 +59,10 @@ namespace Bank_Simulator
 
         public static bool IsNameUsed(string name)
         {
-            if (accounts.Count == 0) return false;
-            for (int i = 0; i < accounts.Count; i++)
+            if (_accounts.Count == 0) return false;
+            for (int i = 0; i < _accounts.Count; i++)
             {
-                if (name == accounts[i].name)
+                if (name == _accounts[i]._name)
                 {
                     return true;
                 }
@@ -72,29 +72,26 @@ namespace Bank_Simulator
 
         public void Deposit(int amount)
         {
-            this.balance += amount;
-            this.history.Add($"+{amount}€");
+            this._balance += amount;
+            this._history.Add($"+{amount}€");
         }
 
         public void Withdraw(int amount)
         {
-            if (this.balance >= amount)
+            if (this._balance >= amount)
             {
-                this.balance -= amount;
-                this.history.Add($"-{amount}€");
+                this._balance -= amount;
+                this._history.Add($"-{amount}€");
             }
             else { Console.WriteLine("Non hai abbastanza soldi"); }
         }
 
-        public int GetBalance() { return this.balance; }
+        public int GetBalance() { return this._balance; }
 
-        public void PrintHistory()
-        {
-            Console.WriteLine("\nCronologia:");
-            for (int i = 0; i < this.history.Count; i++)
-            {
-                Console.WriteLine(this.history[i]);
-            }
-        }
+        public string GetName() => this._name;
+
+        public void SetName(string name) => this._name = name;
+
+        public List<string> GetHistory() => this._history;
     }
 }
