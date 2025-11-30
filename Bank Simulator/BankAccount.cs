@@ -13,7 +13,6 @@ namespace Bank_Simulator
         private string iban;
         private List<string> history = new List<string>();
         static List<BankAccount> accounts = new List<BankAccount>();
-        static BankAccount currentAccount;
 
         public BankAccount(string name, int balance, string iban)
         {
@@ -23,14 +22,13 @@ namespace Bank_Simulator
             this.iban = iban;
             accounts.Add(this);
             Console.WriteLine("Account creato");
-            Console.WriteLine("Accesso in corso..");
-            LogIn(name);
         }
 
-        public static void LogIn(string name)
+        public BankAccount LogIn(string name)
         {
-            currentAccount = FindAccountByName(name);
+            var acc = FindAccountByName(name);
             Console.WriteLine("Accesso completato con successo");
+            return acc;
         }
 
         static BankAccount FindAccountByName(string name)
@@ -72,38 +70,31 @@ namespace Bank_Simulator
             return false;
         }
 
-        public static void Deposit(int amount)
+        public void Deposit(int amount)
         {
-            currentAccount.balance += amount;
-            currentAccount.history.Add($"+{amount}€");
+            this.balance += amount;
+            this.history.Add($"+{amount}€");
         }
 
-        public static void Withdraw(int amount)
+        public void Withdraw(int amount)
         {
-            if (currentAccount.balance >= amount)
+            if (this.balance >= amount)
             {
-                currentAccount.balance -= amount;
-                currentAccount.history.Add($"-{amount}€");
+                this.balance -= amount;
+                this.history.Add($"-{amount}€");
             }
             else { Console.WriteLine("Non hai abbastanza soldi"); }
         }
 
-        public static int GetBalance() { return currentAccount.balance; }
+        public int GetBalance() { return this.balance; }
 
-        public static void PrintHistory()
+        public void PrintHistory()
         {
             Console.WriteLine("\nCronologia:");
-            for (int i = 0; i < currentAccount.history.Count; i++)
+            for (int i = 0; i < this.history.Count; i++)
             {
-                Console.WriteLine(currentAccount.history[i]);
+                Console.WriteLine(this.history[i]);
             }
-        }
-
-        public static void LogOut()
-        {
-            Console.WriteLine("Sto uscendo dall'account..");
-            currentAccount = null;
-            Console.WriteLine("Logout effettuato con successo");
         }
     }
 }

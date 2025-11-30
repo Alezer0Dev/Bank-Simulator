@@ -9,6 +9,7 @@ string iban;
 int choice;
 int amount;
 Random rand = new Random();
+Bank_Simulator.BankAccount currentAccount = null;
 
 Console.WriteLine("Inserisci il tuo nome: ");
 
@@ -26,7 +27,7 @@ do
     iban = iban += rand.Next(1000000000, 1999999999);
 } while (BankAccount.IsIbanUsed(iban));
 
-new BankAccount(name, balance, iban);
+currentAccount = new BankAccount(name, balance, iban);
 Console.WriteLine($"Conto creato con i seguenti dati:\nNome titolare: {name}\nSaldo: {balance}\nIBAN: {iban}");
 do
 {
@@ -40,38 +41,38 @@ do
 
     switch (choice)
     {
-        case 1:
+            case 1:
             Console.WriteLine("Quanti soldi vuoi depositare?:");
             do
             {
                 amount = Convert.ToInt32(Console.ReadLine());
             }
             while (amount <= 0);
-            BankAccount.Deposit(amount);
+            currentAccount.Deposit(amount);
             amount = 0;
             break;
 
-        case 2:
+            case 2:
             Console.WriteLine("Quanti soldi vuoi prelevare?:");
             do
             {
                 amount = Convert.ToInt32(Console.ReadLine());
             }
             while (amount <= 0);
-            BankAccount.Withdraw(amount);
+            currentAccount.Withdraw(amount);
             amount = 0;
             break;
 
         case 3:
-            Console.WriteLine($"Il tuo saldo è €{BankAccount.GetBalance()}");
+            Console.WriteLine($"Il tuo saldo è €{currentAccount.GetBalance()}");
             break;
 
         case 4:
-            BankAccount.PrintHistory();
+            currentAccount.PrintHistory();
             break;
 
         case 5:
-            BankAccount.LogOut();
+            currentAccount = null;
             break;
 
         default:
