@@ -6,10 +6,12 @@ string name;
 int bonus = 1000;
 int balance = 0;
 string iban;
+string password;
+string confirmPassword;
 int choice;
 int amount;
 Random rand = new Random();
-Bank_Simulator.BankAccount currentAccount = null;
+BankAccount currentAccount = null;
 
 Console.WriteLine("Inserisci il tuo nome: ");
 
@@ -27,7 +29,20 @@ do
     iban = iban += rand.Next(1000000000, 1999999999);
 } while (BankAccount.IsIbanUsed(iban));
 
-currentAccount = new BankAccount(name, balance, iban);
+do
+{
+    Console.WriteLine("Inserisci una password per il conto (minimo 4 caratteri):");
+    password = Console.ReadLine();
+}
+while (String.IsNullOrWhiteSpace(password) || password.Length < 4);
+do
+{
+    Console.WriteLine("Conferma la password:");
+    confirmPassword = Console.ReadLine();
+}
+while (confirmPassword != password);
+
+currentAccount = new BankAccount(name, balance, iban, password);
 Console.WriteLine($"Conto creato con i seguenti dati:\nNome titolare: {name}\nSaldo: {balance}\nIBAN: {iban}");
 do
 {

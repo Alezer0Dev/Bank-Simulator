@@ -10,16 +10,18 @@ namespace Bank_Simulator
     {
         private string _name;
         private int _balance;
+        private string _password;
         private string _iban;
         private List<string> _history = new List<string>();
         static List<BankAccount> _accounts = new List<BankAccount>();
 
-        public BankAccount(string name, int balance, string iban)
+        public BankAccount(string name, int balance, string iban, string password)
         {
             Console.WriteLine("Creazione account..");
             this._name = name;
             this._balance = balance;
             this._iban = iban;
+            this._password = password;
             _accounts.Add(this);
             Console.WriteLine("Account creato");
         }
@@ -74,6 +76,20 @@ namespace Bank_Simulator
         {
             this._balance += amount;
             this._history.Add($"+{amount}€");
+        }
+
+        // Verifica la password fornita (non espone la password reale)
+        public bool VerifyPassword(string password)
+        {
+            return this._password == password;
+        }
+
+        // Permette di cambiare la password fornendo la vecchia password
+        public bool ChangePassword(string oldPassword, string newPassword)
+        {
+            if (!VerifyPassword(oldPassword)) return false;
+            this._password = newPassword;
+            return true;
         }
 
         public void Withdraw(int amount)
