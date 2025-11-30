@@ -33,7 +33,7 @@ namespace Bank_Simulator
             return acc;
         }
 
-        static BankAccount FindAccountByName(string name)
+        public static BankAccount FindAccountByName(string name)
         {
             if (_accounts.Count == 0) throw new Exception("Non esiste nessun account");
             for (int i = 0; i < _accounts.Count; i++)
@@ -72,19 +72,22 @@ namespace Bank_Simulator
             return false;
         }
 
+        public static List<BankAccount> GetAccountsList()
+        {
+            return _accounts;
+        }
+
         public void Deposit(int amount)
         {
             this._balance += amount;
             this._history.Add($"+{amount}€");
         }
 
-        // Verifica la password fornita (non espone la password reale)
         public bool VerifyPassword(string password)
         {
             return this._password == password;
         }
 
-        // Permette di cambiare la password fornendo la vecchia password
         public bool ChangePassword(string oldPassword, string newPassword)
         {
             if (!VerifyPassword(oldPassword)) return false;
@@ -103,6 +106,8 @@ namespace Bank_Simulator
         }
 
         public int GetBalance() { return this._balance; }
+
+        public string GetIban() => this._iban;
 
         public string GetName() => this._name;
 
