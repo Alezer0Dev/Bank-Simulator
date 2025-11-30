@@ -12,25 +12,28 @@ Random rand = new Random();
 
 Console.WriteLine("Inserisci il tuo nome: ");
 
-do {
+do
+{
     name = Console.ReadLine();
 }
 while (String.IsNullOrWhiteSpace(name) || BankAccount.IsNameUsed(name));
 
 balance += bonus;
 
-do {
+do
+{
     iban = "IT";
     iban = iban += rand.Next(1000000000, 1999999999);
 } while (BankAccount.IsIbanUsed(iban));
 
-BankAccount.NewAccount(name, balance, iban);
+new BankAccount(name, balance, iban);
 Console.WriteLine($"Conto creato con i seguenti dati:\nNome titolare: {name}\nSaldo: {balance}\nIBAN: {iban}");
 do
 {
     Console.WriteLine("Cosa vuoi fare?\n1) Deposita\n2) Preleva\n3) Visualizza saldo\n4) Visualizza cronologia delle operazioni\n5) Logout");
 
-    do {
+    do
+    {
         choice = Convert.ToInt32(Console.ReadLine());
     }
     while (choice < 1 || choice > 5);

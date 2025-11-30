@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace Bank_Simulator
 {
-    public class BankAccount {
+    public class BankAccount
+    {
         private string name;
         private int balance;
         private string iban;
@@ -14,26 +15,26 @@ namespace Bank_Simulator
         static List<BankAccount> accounts = new List<BankAccount>();
         static BankAccount currentAccount;
 
-        BankAccount(string name, int balance, string iban) {
+        public BankAccount(string name, int balance, string iban)
+        {
+            Console.WriteLine("Creazione account..");
             this.name = name;
             this.balance = balance;
             this.iban = iban;
-        }
-
-        public static void NewAccount(string name, int balance, string iban) {
-            Console.WriteLine("Creazione account..");
-            accounts.Add(new BankAccount(name, balance, iban));
+            accounts.Add(this);
             Console.WriteLine("Account creato");
             Console.WriteLine("Accesso in corso..");
             LogIn(name);
         }
 
-        public static void LogIn(string name) {
+        public static void LogIn(string name)
+        {
             currentAccount = FindAccountByName(name);
             Console.WriteLine("Accesso completato con successo");
         }
 
-        static BankAccount FindAccountByName (string name) {
+        static BankAccount FindAccountByName(string name)
+        {
             if (accounts.Count == 0) throw new Exception("Non esiste nessun account");
             for (int i = 0; i < accounts.Count; i++)
             {
@@ -45,7 +46,8 @@ namespace Bank_Simulator
             throw new Exception("Nessun account esistente con questo nome");
         }
 
-        public static bool IsIbanUsed(string iban) {
+        public static bool IsIbanUsed(string iban)
+        {
             if (accounts.Count == 0) return false;
             for (int i = 0; i < accounts.Count; i++)
             {
@@ -70,12 +72,14 @@ namespace Bank_Simulator
             return false;
         }
 
-        public static void Deposit(int amount) {
+        public static void Deposit(int amount)
+        {
             currentAccount.balance += amount;
             currentAccount.history.Add($"+{amount}€");
         }
 
-        public static void Withdraw(int amount) {
+        public static void Withdraw(int amount)
+        {
             if (currentAccount.balance >= amount)
             {
                 currentAccount.balance -= amount;
@@ -86,14 +90,17 @@ namespace Bank_Simulator
 
         public static int GetBalance() { return currentAccount.balance; }
 
-        public static void PrintHistory() {
+        public static void PrintHistory()
+        {
             Console.WriteLine("\nCronologia:");
-            for (int i = 0; i < currentAccount.history.Count; i++) {
+            for (int i = 0; i < currentAccount.history.Count; i++)
+            {
                 Console.WriteLine(currentAccount.history[i]);
             }
         }
 
-        public static void LogOut() {
+        public static void LogOut()
+        {
             Console.WriteLine("Sto uscendo dall'account..");
             currentAccount = null;
             Console.WriteLine("Logout effettuato con successo");
